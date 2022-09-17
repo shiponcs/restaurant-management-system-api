@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start:dev": "nodemon server.js",
-    "start:prod": "SET NODE_ENV=production && SET PORT=5000 && nodemon server.js"
+    "start:prod": "SET NODE_ENV=production && SET PORT=3000 && nodemon server.js",
+    "debug": "ndb server.js"
   },
   "author": "MD Zanea Alam",
   "license": "ISC",
@@ -13,7 +14,8 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongoose": "^5.13.14",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
     "eslint": "^8.19.0",
