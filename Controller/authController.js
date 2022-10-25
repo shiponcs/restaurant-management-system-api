@@ -2,7 +2,6 @@ const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../Models/userModel');
 const catchAsync = require('../utility/catchAsync');
-const AppError = require('../utility/apiError');
 const ApiError = require('../utility/apiError');
 
 const signToken = (id) =>
@@ -32,7 +31,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // check if email and password exist
   if (!email || !password) {
     return next(
-      new AppError(
+      new ApiError(
         'Please provide email and password!',
         400
       )
@@ -48,7 +47,7 @@ exports.login = catchAsync(async (req, res, next) => {
     !(await user.isCorrectPassword(password, user.password))
   ) {
     return next(
-      new AppError('Incorrect email or password', 401)
+      new ApiError('Incorrect email or password', 401)
     );
   }
   // If everything ok, end token to client
@@ -72,7 +71,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError(
+      new ApiError(
         'You are not loggin in! Please log in to get access',
         401
       )

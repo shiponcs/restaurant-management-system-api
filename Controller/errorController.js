@@ -50,14 +50,6 @@ const handleValidatonError = (err) => {
   return new ApiError(message, 400);
 };
 
-const handleJWTError = () =>
-  new ApiError('Invalid token, Please login again', 401);
-
-const handleJWTExpiredError = () =>
-  new ApiError(
-    'Your token has expired, Please login again',
-    401
-  );
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
@@ -74,12 +66,6 @@ module.exports = (err, req, res, next) => {
     }
     if (error.name === 'ValidationError') {
       error = handleValidatonError(error);
-    }
-    if (error.name === 'JsonWebTokenError') {
-      error = handleJWTError();
-    }
-    if (error.name === 'TokenExpiredError') {
-      error = handleJWTExpiredError();
     }
     sendErrorProd(error, res);
   }
