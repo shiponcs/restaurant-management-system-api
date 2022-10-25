@@ -8,7 +8,7 @@
     "start:prod": "SET NODE_ENV=production && SET PORT=3000 && nodemon server.js",
     "debug": "ndb server.js"
   },
-  "author": "MD Zanea Alam",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -25,10 +25,8 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.30.1",
     "prettier": "^2.7.1"
   },
   "engines": {
