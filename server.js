@@ -13,7 +13,7 @@ process.on('uncaughtException', (err) => {
 const app = require('./app');
 
 const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
+  '<password>',
   process.env.DATABASE_PASSWORD
 );
 
@@ -26,7 +26,7 @@ mongoose
   })
   .then(() => {
     console.log('Database connecton successful');
-  });
+  }).catch((error) => console.log(error));
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
