@@ -6,7 +6,10 @@ const { signToken } = require('./authController');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   // Query
-  const userQuery = new ApiFeatures(User.find(), req.query)
+  const userQuery = new ApiFeatures(
+    User.find({ isAdmin: false }),
+    req.query
+  )
     .filter()
     .sort()
     .selectFields()
@@ -84,17 +87,13 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.addNewUser = catchAsync(async (req, res) => {
-  const newUser = await User.create({
+  await User.create({
     name: req.body.name,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
-  const token = signToken(newUser._id);
   res.status(201).json({
     status: 'Success',
-    token,
-    data: {
-      newUser,
-    },
+    message: 'Successfully Created a User',
   });
 });
