@@ -2,6 +2,7 @@ const User = require('../Models/userModel');
 const ApiFeatures = require('../utility/apiFeatures');
 const catchAsync = require('../utility/catchAsync');
 const ApiError = require('../utility/apiError');
+const { signToken } = require('./authController');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   // Query
@@ -21,33 +22,37 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 exports.getUser = (req, res) => {
   res.status(500).json({
     status: 'Fail',
     message: 'Under Construction',
   });
 };
+
 exports.updateUser = (req, res) => {
   res.status(500).json({
     status: 'Fail',
     message: 'Under Construction',
   });
 };
-exports.deleteUser = catchAsync(async (req, res) => {
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
   const deletedUser = await User.findByIdAndDelete(
     req.params.id
   );
   if (!deletedUser) {
     return next(
-      new ApiError('No user found with that ID', 404)
+      new ApiError('No user exist with this ID!', 400)
     );
   }
   res.status(204).send(null);
 });
+
 exports.login = catchAsync(async (req, res, next) => {
   const { name, password } = req.body;
 
-  // check if email and password exist
+  // check if username and password is given in request
   if (!name || !password) {
     return next(
       new ApiError(
@@ -70,23 +75,26 @@ exports.login = catchAsync(async (req, res, next) => {
     );
   }
 
-  // If everything ok, send successful meassage
+  // If everything ok, send token to client
+  const token = signToken(user._id);
   res.status(200).json({
     status: 'success',
-    message: 'Succesfully Logged In',
+    token,
   });
 });
 
 exports.addNewUser = catchAsync(async (req, res) => {
-  const user = await User.create({
+  const newUser = await User.create({
     name: req.body.name,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
+  const token = signToken(newUser._id);
   res.status(201).json({
     status: 'Success',
+    token,
     data: {
-      id: user._id,
+      newUser,
     },
   });
 });
