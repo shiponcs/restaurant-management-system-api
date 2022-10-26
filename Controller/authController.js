@@ -85,8 +85,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   );
 
   // Check if user still exists
-  const freshUser = await User.findById(decoded.id);
-  if (!freshUser)
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser)
     return next(
       new ApiError(
         'The user belonging to this token does no longer exits',
@@ -95,7 +95,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
 
   // Check if user changed password after the token wan issued
-  if (freshUser.changedPasswordAfter(decoded.iat)) {
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
       new ApiError(
         'User recently changed password! please login again.',
@@ -105,6 +105,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // Grant access to the protected route
-  req.user = freshUser;
+  req.user = currentUser;
   next();
 });

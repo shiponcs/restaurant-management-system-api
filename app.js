@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes
-app.use('/api/v1/users', userRouter);
+app.use('/api/users', userRouter);
 
 app.all('*', (req, res, next) => {
   next(
