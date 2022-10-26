@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'User must have a name'],
     trim: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -24,6 +25,10 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Password are not same',
     },
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
   },
 });
 
