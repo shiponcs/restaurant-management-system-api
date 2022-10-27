@@ -7,15 +7,22 @@ const authController = require('../Controller/authController');
 router.post(
   '/create-user',
   authController.protect,
+  authController.restrictToAdmin,
   userController.addNewUser
 );
 router.post('/login', userController.login);
 
-router.route('/').get(userController.getAllUsers);
+router
+  .route('/')
+  .get(
+    authController.protect,
+    authController.restrictToAdmin,
+    userController.getAllUsers
+  );
 
 router
   .route('/:id')
-  .get(userController.getUser)
+  .get(authController.protect, userController.getUser)
   .patch(userController.updateUser)
   .delete(
     authController.protect,
