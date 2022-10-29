@@ -7,6 +7,7 @@ const userRouter = require('./Routes/userRoutes');
 const reservationRoutes = require('./Routes/reservationRoutes')
 const itemRouter = require('./Routes/itemRoutes');
 const expenseRoutes = require('./Routes/expenseRoutes');
+const orderRouter = require('./Routes/orderRoutes');
 const errorHandler = require('./Controller/errorController');
 //Middleware
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api/users', userRouter);
 app.use('/api/reservation', reservationRoutes);
 app.use('/api/items', itemRouter);
 app.use('/api/expense', expenseRoutes)
+app.use('/api/orders', orderRouter);
 
 app.all('*', (req, res, next) => {
   next(
