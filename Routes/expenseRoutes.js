@@ -6,14 +6,14 @@ const expenseController = require('../Controller/expenseController');
 
 router.post(
   '/create-expense',
-//   authController.protect,
+  authController.protect,
   expenseController.createExpense
 );
-// router.get(
-//     '/',
-//     authController.protect,
-//     expenseController.getAllExpenses
-// )
+router.get(
+    '/',
+    authController.protect,
+    expenseController.getAllExpenses
+)
 // router
 //     .route('/:id')
 //     .delete(

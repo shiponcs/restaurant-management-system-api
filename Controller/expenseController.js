@@ -20,6 +20,26 @@ exports.createExpense = catchAsync(async (req, res) => {
     });
 });
 
+exports.getAllExpenses = catchAsync(async (req, res, next) => {
+  // Query
+  const expenseQuery = new ApiFeatures(
+    Expense.find(),
+    req.query
+  )
+    .filter()
+    .sort()
+    .pagination();
+  // Execute query
+  const expenses = await expenseQuery.query;
+  // Send Response
+  res.status(200).json({
+    status: 'success',
+    results: expenses.length,
+    data: {
+      expenses,
+    },
+  });
+});
 
 // ----------------
 
