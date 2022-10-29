@@ -87,13 +87,16 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.addNewUser = catchAsync(async (req, res) => {
-  await User.create({
+  const user = await User.create({
     name: req.body.name,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
   res.status(201).json({
     status: 'Success',
-    message: 'Successfully Created a User',
+    data: {
+      id: user._id,
+      username: user.name,
+    },
   });
 });
