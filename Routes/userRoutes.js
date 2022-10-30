@@ -11,7 +11,7 @@ router.post(
   userController.addNewUser
 );
 router.post('/login', userController.login);
-
+router.get('/logout', userController.logout);
 router
   .route('/')
   .get(
