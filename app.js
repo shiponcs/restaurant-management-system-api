@@ -4,7 +4,9 @@ const morgan = require('morgan');
 const app = express();
 const ApiError = require('./utility/apiError');
 const userRouter = require('./Routes/userRoutes');
+const reservationRoutes = require('./Routes/reservationRoutes')
 const itemRouter = require('./Routes/itemRoutes');
+const expenseRoutes = require('./Routes/expenseRoutes');
 const orderRouter = require('./Routes/orderRoutes');
 const errorHandler = require('./Controller/errorController');
 //Middleware
@@ -15,7 +17,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // Routes
 app.use('/api/users', userRouter);
+app.use('/api/reservation', reservationRoutes);
 app.use('/api/items', itemRouter);
+app.use('/api/expense', expenseRoutes)
 app.use('/api/orders', orderRouter);
 
 app.all('*', (req, res, next) => {

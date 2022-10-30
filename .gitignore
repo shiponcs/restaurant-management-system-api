@@ -5,3 +5,4 @@ config.env
 public\img
 dev-data
 import-dev-data
+*.rest
