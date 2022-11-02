@@ -13,7 +13,7 @@ const orderRouter = require('./Routes/orderRoutes');
 const errorHandler = require('./Controller/errorController');
 //Middleware
 const corsOptions ={
-  origin: "http://(localhost:3001)$", 
+  origin: "http://localhost:3001", 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,
 }
