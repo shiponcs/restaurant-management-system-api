@@ -73,6 +73,7 @@ exports.login = catchAsync(async (req, res, next) => {
     !user ||
     !(await user.isCorrectPassword(password, user.password))
   ) {
+    console.log("INCORRECT CREDENTIALS");
     return next(
       new ApiError('Incorrect username or password', 401)
     );
