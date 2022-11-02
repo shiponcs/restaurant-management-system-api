@@ -73,9 +73,11 @@ exports.login = catchAsync(async (req, res, next) => {
     !user ||
     !(await user.isCorrectPassword(password, user.password))
   ) {
-    return next(
-      new ApiError('Incorrect username or password', 401)
-    );
+    res.status(401).json({ status: 'failed', message: "Wrong credentials" });
+    return;
+    // return next(
+    //   new ApiError('Incorrect username or password', 401)
+    // );
   }
 
   // If everything ok, send token to client
