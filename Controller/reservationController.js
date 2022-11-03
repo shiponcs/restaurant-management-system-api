@@ -5,6 +5,7 @@ const ApiError = require('../utility/apiError');
 const { signToken } = require('./authController');
 
 exports.createReservation = catchAsync(async (req, res) => {
+  console.log("req-reservation", req.clientName, req.contactNumber);
     const reservation = await Reservation.create({
       clientName: req.body.clientName,
       people: req.body.people,
