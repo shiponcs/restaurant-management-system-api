@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const reservationScheme = new mongoose.Schema({
   clientName: {
@@ -10,7 +9,7 @@ const reservationScheme = new mongoose.Schema({
   reservationDate: {
     type: Date,
     default: Date.now,
-    required: true
+    required: true,
   },
   people: {
     type: Number,
@@ -20,10 +19,12 @@ const reservationScheme = new mongoose.Schema({
   contactNumber: {
     type: String,
     required: true,
-  }
+  },
 });
 
-
-const Reservation = mongoose.model('Reservation', reservationScheme);
+const Reservation = mongoose.model(
+  'Reservation',
+  reservationScheme
+);
 
 module.exports = Reservation;
