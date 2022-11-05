@@ -68,3 +68,77 @@ exports.deleteOrder = catchAsync(async (req, res, next) => {
   }
   res.status(204).send(null);
 });
+
+exports.thisMonthsOrder = catchAsync(
+  async (req, res, next) => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+
+    const thisMonthsOrder = await Order.find({
+      $and: [
+        {
+          orderCreatedAt: {
+            $gte: new Date(`${year}-${month + 1}-1`),
+          },
+        },
+        {
+          orderCreatedAt: {
+            $lt: new Date(
+              `${year}-${month + 1}-${day + 1}`
+            ),
+          },
+        },
+      ],
+    });
+    if (!thisMonthsOrder) {
+      return next(
+        new ApiError('No Order found for this months!', 400)
+      );
+    }
+
+    res.status(200).json({
+      status: 'success',
+      results: thisMonthsOrder.length,
+      data: {
+        thisMonthsOrder,
+      },
+    });
+  }
+);
+
+exports.todaysOrder = catchAsync(async (req, res, next) => {
+  const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+
+  const todaysOrder = await Order.find({
+    $and: [
+      {
+        orderCreatedAt: {
+          $gt: new Date(`${year}-${month + 1}-${day - 1}`),
+        },
+      },
+      {
+        orderCreatedAt: {
+          $lt: new Date(`${year}-${month + 1}-${day + 1}`),
+        },
+      },
+    ],
+  });
+  if (!todaysOrder) {
+    return next(
+      new ApiError('No Order found for today!', 400)
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    results: todaysOrder.length,
+    data: {
+      todaysOrder,
+    },
+  });
+});

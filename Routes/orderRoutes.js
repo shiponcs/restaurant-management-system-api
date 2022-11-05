@@ -28,4 +28,16 @@ router
     orderController.deleteOrder
   );
 
+router.get(
+  '/this-months-order',
+  authController.protect,
+  orderController.thisMonthsOrder
+);
+
+router.get(
+  '/todays-order',
+  authController.protect,
+  orderController.todaysOrder
+);
+
 module.exports = router;

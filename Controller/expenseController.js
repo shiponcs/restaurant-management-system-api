@@ -1,5 +1,6 @@
 const Expense = require('../Models/expenseModel');
 const ApiFeatures = require('../utility/apiFeatures');
+const ApiError = require('../utility/apiError');
 const catchAsync = require('../utility/catchAsync');
 
 exports.createExpense = catchAsync(async (req, res) => {
@@ -36,6 +37,87 @@ exports.getAllExpenses = catchAsync(
       results: expenses.length,
       data: {
         expenses,
+      },
+    });
+  }
+);
+
+exports.thisMonthsExpense = catchAsync(
+  async (req, res, next) => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+
+    const thisMonthsExpense = await Expense.find({
+      $and: [
+        {
+          date: {
+            $gte: new Date(`${year}-${month + 1}-1`),
+          },
+        },
+        {
+          date: {
+            $lt: new Date(
+              `${year}-${month + 1}-${day + 1}`
+            ),
+          },
+        },
+      ],
+    });
+    if (!thisMonthsExpense) {
+      return next(
+        new ApiError(
+          'No Expense found for this months!',
+          400
+        )
+      );
+    }
+
+    res.status(200).json({
+      status: 'success',
+      results: thisMonthsExpense.length,
+      data: {
+        thisMonthsExpense,
+      },
+    });
+  }
+);
+
+exports.todaysExpense = catchAsync(
+  async (req, res, next) => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+
+    const todaysExpense = await Expense.find({
+      $and: [
+        {
+          date: {
+            $gt: new Date(`${year}-${month + 1}-${day}`),
+          },
+        },
+        {
+          date: {
+            $lt: new Date(
+              `${year}-${month + 1}-${day + 1}`
+            ),
+          },
+        },
+      ],
+    });
+    if (!todaysExpense) {
+      return next(
+        new ApiError('No Expense found for today!', 400)
+      );
+    }
+
+    res.status(200).json({
+      status: 'success',
+      results: todaysExpense.length,
+      data: {
+        todaysExpense,
       },
     });
   }
