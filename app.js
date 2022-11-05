@@ -15,7 +15,7 @@ const errorHandler = require('./Controller/errorController');
 const corsOptions = {
   origin: [
     'http://localhost:3001',
-    'https://6365cc8d6084a0095b29ffd0--tubular-granita-4b68d7.netlify.app',
+    'https://main--tubular-granita-4b68d7.netlify.app/',
   ],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
