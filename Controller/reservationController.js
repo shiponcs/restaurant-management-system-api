@@ -94,14 +94,12 @@ exports.todaysReservation = catchAsync(
       $and: [
         {
           reservationDate: {
-            $gt: new Date(
-              `${year}-${month + 1}-${day - 1}`
-            ),
+            $gte: new Date(`${year}-${month + 1}-${day}`),
           },
         },
         {
           reservationDate: {
-            $lte: new Date(
+            $lt: new Date(
               `${year}-${month + 1}-${day + 1}`
             ),
           },

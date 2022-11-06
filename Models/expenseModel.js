@@ -22,13 +22,13 @@ const expenseSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    min: [0, "The value is too low to be a price"],
+    min: [0, 'The value is too low to be a price'],
     required: [true, 'Each expense must have a price.'],
   },
   date: {
     type: Date,
     default: Date.now,
-    required: true
+    required: true,
   },
 });
 
